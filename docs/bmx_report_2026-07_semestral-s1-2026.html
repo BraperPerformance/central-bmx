@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMX Serviços — Relatório de Marketing · 1º Semestre 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+<style>
+:root{
+  --bg:#f5f4f0; --surface:#ffffff; --card:#ffffff; --card-2:#efeee9;
+  --border:#d8d6cf; --border-soft:#e5e3dc;
+  --txt:#161616; --muted:#5c5c5c; --faint:#8b8b8b;
+  --yellow:#F1C232; --yellow-dim:#d9a61f; --graphite:#434343;
+  --pos:#1a7f37; --neg:#c62828; --blue:#4a76a8;
+  --disp:'Barlow Condensed',sans-serif; --mono:'IBM Plex Mono',monospace; --body:'Archivo',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:var(--body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+::selection{background:var(--yellow);color:#161616}
+
+/* ---------- NAV ---------- */
+.nav{position:sticky;top:0;z-index:50;background:rgba(245,244,240,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border-soft)}
+.nav-inner{max-width:1180px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:28px;height:58px}
+.nav-brand{font-family:var(--disp);font-weight:700;font-size:21px;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+.nav-brand b{color:var(--yellow)}
+.nav-links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{font-family:var(--mono);font-size:11.5px;color:var(--muted);text-decoration:none;padding:7px 11px;border-radius:6px;white-space:nowrap;transition:.18s}
+.nav-links a:hover{color:var(--txt);background:var(--card)}
+.nav-links a.active{color:#161616;background:var(--yellow);font-weight:500}
+
+/* ---------- HERO ---------- */
+.hero{max-width:1180px;margin:0 auto;padding:64px 24px 40px;position:relative}
+.hero-bar{width:64px;height:6px;background:var(--yellow);margin-bottom:22px}
+.hero h1{font-family:var(--disp);font-weight:700;font-size:clamp(40px,6vw,64px);line-height:1;text-transform:uppercase;letter-spacing:.015em}
+.hero h1 span{color:var(--yellow)}
+.hero p.sub{margin-top:14px;color:var(--muted);max-width:640px;font-size:15.5px}
+.hero-meta{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.chip{font-family:var(--mono);font-size:11px;padding:5px 11px;border-radius:99px;border:1px solid var(--border);color:var(--muted)}
+.chip.warn{border-color:var(--yellow);color:var(--yellow)}
+
+/* ---------- SECTIONS ---------- */
+.section{max-width:1180px;margin:0 auto;padding:52px 24px 8px}
+.sec-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:6px}
+.sec-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--yellow);text-transform:uppercase;margin-bottom:8px}
+.sec-title{font-family:var(--disp);font-weight:600;font-size:34px;line-height:1.05;text-transform:uppercase;letter-spacing:.01em}
+.sec-desc{color:var(--muted);margin-top:6px;font-size:14px;max-width:680px}
+.badge-wait{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--yellow);border:1px dashed var(--yellow-dim);padding:5px 10px;border-radius:6px;white-space:nowrap;align-self:center}
+.badge-ok{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--pos);border:1px solid #3d5a3d;padding:5px 10px;border-radius:6px;white-space:nowrap;align-self:center}
+.divider{max-width:1180px;margin:48px auto 0;padding:0 24px}
+.divider hr{border:0;border-top:1px solid var(--border-soft)}
+
+/* ---------- KPI GRID ---------- */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:12px;margin-top:22px}
+.kpi{background:var(--card);border:1px solid var(--border-soft);border-radius:10px;padding:16px 16px 14px;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--graphite)}
+.kpi.hl::before{background:var(--yellow)}
+.kpi .k-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.kpi .k-value{font-family:var(--disp);font-weight:700;font-size:34px;line-height:1.1;margin-top:6px}
+.kpi .k-note{font-family:var(--mono);font-size:10.5px;margin-top:4px;color:var(--faint)}
+.kpi .k-note.up{color:var(--pos)} .kpi .k-note.down{color:var(--neg)} .kpi .k-note.warn{color:var(--yellow)}
+
+/* ---------- CARDS / CHARTS ---------- */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+@media(max-width:880px){.grid-2,.grid-3{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--border-soft);border-radius:12px;padding:20px}
+.card h3{font-family:var(--disp);font-weight:600;font-size:20px;text-transform:uppercase;letter-spacing:.02em}
+.card .c-sub{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:2px;margin-bottom:12px}
+.chart-wrap{position:relative;height:250px}
+.chart-wrap.tall{height:290px}
+
+/* ---------- TABLES ---------- */
+.tbl-wrap{overflow-x:auto;margin-top:14px;border:1px solid var(--border-soft);border-radius:12px;background:var(--card)}
+table{width:100%;border-collapse:collapse;min-width:640px}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);text-align:left;padding:12px 14px;border-bottom:1px solid var(--border);background:var(--card-2)}
+td{padding:11px 14px;border-bottom:1px solid var(--border-soft);font-size:13.5px}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-family:var(--mono);font-size:12.5px}
+tr.total td{background:var(--card-2);font-weight:600}
+tr.me td{background:rgba(241,194,50,.08)}
+.tag-you{font-family:var(--mono);font-size:9.5px;background:var(--yellow);color:#161616;padding:2px 7px;border-radius:4px;margin-left:8px;vertical-align:middle}
+
+/* ---------- FUNNEL ---------- */
+.funnel{margin-top:20px;display:flex;flex-direction:column;gap:8px}
+.f-row{display:flex;align-items:center;gap:14px}
+.f-bar{height:56px;background:linear-gradient(90deg,var(--yellow),var(--yellow-dim));border-radius:8px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;color:#161616;min-width:180px;transition:width .8s cubic-bezier(.2,.7,.3,1)}
+.f-bar .f-name{font-family:var(--disp);font-weight:700;font-size:19px;text-transform:uppercase}
+.f-bar .f-val{font-family:var(--disp);font-weight:700;font-size:26px}
+.f-meta{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:nowrap}
+.f-meta b{color:var(--txt)}
+.f-conv{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-left:4px}
+
+/* ---------- TABS ---------- */
+.tabs{display:flex;gap:6px;margin-top:18px;flex-wrap:wrap}
+.tab{font-family:var(--mono);font-size:12px;padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:.15s}
+.tab:hover{color:var(--txt)}
+.tab.active{background:var(--yellow);border-color:var(--yellow);color:#161616;font-weight:500}
+.tab-pane{display:none}.tab-pane.show{display:block}
+
+/* ---------- HBARS (demografia) ---------- */
+.hbars{margin-top:8px;display:flex;flex-direction:column;gap:9px}
+.hb{display:grid;grid-template-columns:150px 1fr 62px;align-items:center;gap:10px}
+.hb .hb-l{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hb .hb-track{height:10px;background:var(--card-2);border-radius:5px;overflow:hidden}
+.hb .hb-fill{height:100%;background:var(--yellow);border-radius:5px;width:0;transition:width .9s ease}
+.hb .hb-v{font-family:var(--mono);font-size:11.5px;text-align:right;color:var(--txt)}
+
+/* ---------- POSTS / EMAIL CARDS ---------- */
+.post-card{background:var(--card);border:1px solid var(--border-soft);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.post-rank{font-family:var(--disp);font-weight:700;font-size:26px;color:var(--yellow)}
+.post-txt{font-size:13.5px;color:var(--txt);line-height:1.45}
+.post-meta{font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+.post-stats{display:flex;gap:14px;flex-wrap:wrap;margin-top:auto}
+.post-stats div{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.post-stats b{display:block;font-family:var(--disp);font-size:21px;color:var(--txt);font-weight:700}
+.mail-status{font-family:var(--mono);font-size:10.5px;padding:4px 9px;border-radius:5px;width:fit-content}
+.mail-status.good{background:rgba(26,127,55,.1);color:var(--pos)}
+.mail-status.mid{background:rgba(241,194,50,.12);color:var(--yellow)}
+
+/* ---------- PLACEHOLDER ---------- */
+.placeholder{border:1px dashed var(--border);border-radius:12px;padding:28px;text-align:center;color:var(--faint);margin-top:18px;background:rgba(255,255,255,.015)}
+.placeholder .ph-icon{font-family:var(--disp);font-size:30px;color:var(--yellow-dim);font-weight:700}
+.placeholder p{font-size:13.5px;max-width:520px;margin:8px auto 0}
+
+/* ---------- CENTRAL BMX ---------- */
+.central{margin-top:20px;background:linear-gradient(135deg,#ffffff,#faf1d3);border:1px solid var(--border);border-radius:14px;padding:30px}
+.central-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:20px}
+.central-item{background:rgba(255,255,255,.75);border:1px solid var(--border-soft);border-radius:10px;padding:16px}
+.central-item h4{font-family:var(--disp);font-size:17px;font-weight:600;text-transform:uppercase;letter-spacing:.02em}
+.central-item p{font-size:12.5px;color:var(--muted);margin-top:5px}
+.soon{font-family:var(--mono);font-size:9.5px;background:var(--yellow);color:#161616;padding:2px 7px;border-radius:4px;letter-spacing:.06em}
+
+/* ---------- INSIGHT ---------- */
+.insight{margin-top:18px;background:rgba(241,194,50,.06);border:1px solid rgba(241,194,50,.3);border-left:4px solid var(--yellow);border-radius:10px;padding:18px 20px}
+.insight .i-title{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--yellow);text-transform:uppercase;margin-bottom:6px}
+.insight p{font-size:14px;color:var(--txt)}
+.insight b{color:var(--yellow)}
+
+/* ---------- FOOTER ---------- */
+footer{margin-top:70px;border-top:1px solid var(--border-soft);padding:26px 24px;text-align:center}
+footer .f1{font-family:var(--disp);font-size:17px;font-weight:600;text-transform:uppercase}
+footer .f2{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:4px}
+
+.sec-num{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:500;background:var(--yellow);color:#161616;padding:3px 9px;border-radius:5px;margin-right:8px;vertical-align:1px}
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+@media(max-width:640px){.hero{padding-top:44px}.f-bar{min-width:120px;padding:0 12px}.f-bar .f-name{font-size:15px}.f-bar .f-val{font-size:20px}.hb{grid-template-columns:110px 1fr 56px}}
+</style>
+</head>
+<body>
+<!-- ============ NAV ============ -->
+<nav class="nav"><div class="nav-inner">
+  <div class="nav-brand">BMX <b>Serviços</b></div>
+  <div class="nav-links">
+    <a href="#midia">Mídia Paga</a>
+    <a href="#roas">Impacto Comercial</a>
+    <a href="#social">Redes Sociais</a>
+    <a href="#email">E-mail Marketing</a>
+    <a href="#projetos">Projetos</a>
+    <a href="#central">Central BMX</a>
+    <a href="#fatto">Fatto Bruto</a>
+  </div>
+</div></nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-bar"></div>
+  <h1>Relatório de Marketing<br><span>1º Semestre 2026</span></h1>
+  <p class="sub">Resultados consolidados das ações de marketing digital — Janeiro a Junho de 2026, com ênfase no 2º trimestre. Mídia paga, social, CRM, impacto comercial e novos ativos do projeto.</p>
+  <div class="hero-meta">
+    <span class="chip warn">V4 — EM VALIDAÇÃO INTERNA</span>
+    <span class="chip">Período: 01/01 – 30/06/2026</span>
+    <span class="chip">Atualizado em 20/07/2026</span>
+    <span class="chip">Fontes: TCI · DRE MKT · Meta · LinkedIn · Ramper</span>
+  </div>
+</header>
+
+<!-- ============ MÍDIA PAGA ============ -->
+<section class="section" id="midia">
+  <div class="sec-head">
+    <div>
+      <div class="sec-eyebrow"><span class="sec-num">01</span>Mídia Paga</div>
+      <div class="sec-title">Visão Geral — 1º Semestre 2026</div>
+      <p class="sec-desc">Performance consolidada de Google Ads e LinkedIn Ads, Janeiro a Junho.</p>
+    </div>
+    <span class="badge-ok">SEMESTRE FECHADO</span>
+  </div>
+  <div class="kpi-grid reveal">
+    <div class="kpi hl"><div class="k-label">Investimento Total</div><div class="k-value" data-count="15599.12" data-fmt="brl">R$ 0</div><div class="k-note">Google + LinkedIn Ads</div></div>
+    <div class="kpi"><div class="k-label">Impressões</div><div class="k-value" data-count="160454" data-fmt="int">0</div><div class="k-note">127 mil via LinkedIn Ads</div></div>
+    <div class="kpi"><div class="k-label">Cliques</div><div class="k-value" data-count="3926" data-fmt="int">0</div><div class="k-note">CTR Google: 8,18%</div></div>
+    <div class="kpi hl"><div class="k-label">Leads</div><div class="k-value" data-count="196" data-fmt="int">0</div><div class="k-note up">Q2: 125 vs Q1: 71 (+76%)</div></div>
+    <div class="kpi"><div class="k-label">CPL Médio Google</div><div class="k-value" data-count="65.72" data-fmt="brl">R$ 0</div><div class="k-note up">Q2: R$ 50,82 (−44% vs Q1)</div></div>
+    <div class="kpi"><div class="k-label">MQLs</div><div class="k-value" data-count="158" data-fmt="int">0</div><div class="k-note">Tx Lead→MQL: 82,3%</div></div>
+    <div class="kpi"><div class="k-label">CTR Junho</div><div class="k-value">9,1%</div><div class="k-note up">melhor do ano</div></div>
+  </div>
+
+  <div class="insight reveal">
+    <div class="i-title">Leitura do semestre</div>
+    <p>O 2º trimestre marcou o melhor momento de mídia do ano: <b>abril entregou 48 leads a R$ 43,53 de CPL</b> — recorde da conta — e o trimestre fechou com CPL 44% menor que o Q1. Junho manteve o investimento estável e cravou o <b>melhor CTR do ano no Google (9,1%)</b>: menos impressões, tráfego mais qualificado. Em maio, Automotivo saiu do ar e <b>Logística Promocional</b> entrou no mix.</p>
+  </div>
+
+  <div class="grid-2">
+    <div class="card reveal"><h3>Investimento vs Leads</h3><div class="c-sub">Google Ads · mês a mês</div><div class="chart-wrap"><canvas id="chInvLeads"></canvas></div></div>
+    <div class="card reveal"><h3>Evolução do CPL</h3><div class="c-sub">Google Ads · R$ por lead</div><div class="chart-wrap"><canvas id="chCPL"></canvas></div></div>
+    <div class="card reveal"><h3>Impressões e Cliques</h3><div class="c-sub">Google Ads · volume mensal</div><div class="chart-wrap"><canvas id="chImprCli"></canvas></div></div>
+    <div class="card reveal"><h3>MQL e Taxa de Conversão</h3><div class="c-sub">Google Ads · qualidade do lead</div><div class="chart-wrap"><canvas id="chMQL"></canvas></div></div>
+  </div>
+
+  <!-- LinkedIn Ads -->
+  <div class="card reveal" style="margin-top:14px">
+    <h3>LinkedIn Ads — Novo Canal <span style="color:var(--yellow)">desde Abr/26</span></h3>
+    <div class="c-sub">Geração de demanda B2B · awareness qualificado + captura via Lead Form</div>
+    <div class="kpi-grid" style="margin-top:10px">
+      <div class="kpi"><div class="k-label">Investimento</div><div class="k-value">R$ 2.980</div><div class="k-note">Abr–Jun</div></div>
+      <div class="kpi"><div class="k-label">Impressões</div><div class="k-value">127.323</div><div class="k-note">80% via institucional</div></div>
+      <div class="kpi"><div class="k-label">Cliques</div><div class="k-value">1.217</div><div class="k-note">CPC institucional: R$ 0,70</div></div>
+      <div class="kpi"><div class="k-label">Leads (form)</div><div class="k-value">4</div><div class="k-note">1 de conta enterprise</div></div>
+    </div>
+    <div class="tbl-wrap" style="margin-top:14px;border:0"><table>
+      <thead><tr><th>Campanha</th><th>Formato</th><th class="num">Invest.</th><th class="num">Impressões</th><th class="num">Cliques</th><th class="num">CTR</th><th class="num">Leads</th><th class="num">CPL</th></tr></thead>
+      <tbody>
+        <tr><td>Institucional (engajamento)</td><td>Feed</td><td class="num">R$ 696</td><td class="num">102.474</td><td class="num">995</td><td class="num">0,97%</td><td class="num">0</td><td class="num">—</td></tr>
+        <tr><td>Transporte Químico</td><td>Estático</td><td class="num">R$ 1.500</td><td class="num">17.865</td><td class="num">171</td><td class="num">0,96%</td><td class="num">3</td><td class="num">R$ 500,07</td></tr>
+        <tr><td>Armazenagem de Vinhos</td><td>Vídeo</td><td class="num">R$ 783</td><td class="num">6.984</td><td class="num">51</td><td class="num">0,73%</td><td class="num">1</td><td class="num">R$ 783,33</td></tr>
+      </tbody></table></div>
+    <div style="font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:10px">Objetivos distintos, réguas distintas: a institucional é motor de alcance (topo de funil); as de Lead Form miram captura junto a decisores B2B — CPL alto é esperado nesse público.</div>
+  </div>
+
+  <!-- ABM -->
+  <div class="grid-2" style="margin-top:14px">
+    <div class="card reveal">
+      <h3>Cobertura de Contas — ABM</h3><div class="c-sub">LinkedIn Ads · empresas impactadas no período</div>
+      <div class="kpi-grid" style="margin-top:10px;grid-template-columns:repeat(2,1fr)">
+        <div class="kpi"><div class="k-label">Empresas únicas</div><div class="k-value">362</div><div class="k-note">alcançadas pelos anúncios</div></div>
+        <div class="kpi hl"><div class="k-label">Engajamento "Very High"</div><div class="k-value">266</div><div class="k-note up">73% da base tocada</div></div>
+        <div class="kpi"><div class="k-label">Contas com interação</div><div class="k-value">26</div><div class="k-note">14 com clique</div></div>
+        <div class="kpi hl"><div class="k-label">Lead de conta-alvo</div><div class="k-value" style="font-size:26px">Ambev</div><div class="k-note up">conta enterprise estratégica</div></div>
+      </div>
+    </div>
+    <div class="card reveal">
+      <h3>Top Contas Alcançadas</h3><div class="c-sub">Grandes embarcadores na frente da marca BMX</div>
+      <div class="tbl-wrap" style="margin-top:8px;border:0"><table style="min-width:420px">
+        <thead><tr><th>Conta</th><th class="num">Impressões</th><th class="num">Cliques</th><th class="num">Engaj.</th></tr></thead>
+        <tbody>
+          <tr class="me"><td>Ambev</td><td class="num">212</td><td class="num">0</td><td class="num">10 · 1 lead</td></tr>
+          <tr><td>Mercado Livre</td><td class="num">795</td><td class="num">6</td><td class="num">6</td></tr>
+          <tr><td>Assaí Atacadista</td><td class="num">344</td><td class="num">5</td><td class="num">5</td></tr>
+          <tr><td>JBS</td><td class="num">141</td><td class="num">3</td><td class="num">4</td></tr>
+          <tr><td>Riachuelo</td><td class="num">156</td><td class="num">4</td><td class="num">5</td></tr>
+          <tr><td>GOL Linhas Aéreas</td><td class="num">76</td><td class="num">3</td><td class="num">5</td></tr>
+          <tr><td>Uber · Petrobras · Total Express</td><td class="num">64–77</td><td class="num">—</td><td class="num">—</td></tr>
+        </tbody></table></div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:10px">Valor de marca/ABM que o nº de leads diretos não captura — abre espaço para camada de InMail 1:1 nas contas mais engajadas.</div>
+    </div>
+  </div>
+</section>
+<div class="divider"><hr></div>
+
+<!-- ============ FUNIL ============ -->
+<section class="section" id="funil">
+  <div class="sec-head">
+    <div>
+      <div class="sec-eyebrow"><span class="sec-num">02</span>Conversão</div>
+      <div class="sec-title">Funil de Conversão — S1</div>
+      <p class="sec-desc">Leads e MQL: mídia paga (TCI) · SQL e Propostas: controle comercial de receptivos · Vendas: Q1 apresentado + DRE. SQL = receptivo que chegou a análise/validação real de parceria.</p>
+    </div>
+    <span class="badge-wait">SQL/PROPOSTAS VIA CONTROLE DE RECEPTIVOS · CRITÉRIO EM VALIDAÇÃO</span>
+  </div>
+  <div class="funnel reveal">
+    <div class="f-row"><div class="f-bar" style="width:100%"><span class="f-name">Leads</span><span class="f-val">196</span></div><div class="f-meta"><b>Q1:</b> 71 · <b>Q2:</b> 125</div></div>
+    <div class="f-row"><div class="f-bar" style="width:82%"><span class="f-name">MQL</span><span class="f-val">158</span></div><div class="f-meta">82,3% conv.<span class="f-conv">Abr 37 · Mai 34 · Jun 30</span></div></div>
+    <div class="f-row"><div class="f-bar" style="width:36%"><span class="f-name">SQL</span><span class="f-val">50</span></div><div class="f-meta">análise comercial real<span class="f-conv">Q1 24 · Q2 26 · fonte: receptivos</span></div></div>
+    <div class="f-row"><div class="f-bar" style="width:26%"><span class="f-name">Propostas</span><span class="f-val">31</span></div><div class="f-meta">62% dos SQLs<span class="f-conv">Q1 16 · Q2 15</span></div></div>
+    <div class="f-row"><div class="f-bar" style="width:18%"><span class="f-name">Vendas</span><span class="f-val">7</span></div><div class="f-meta"><b>R$ 41.682</b> faturados<span class="f-conv">Q1: 5 vendas · Jun: 2 (DRE)</span></div></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card reveal"><h3>Share de Leads por Campanha</h3><div class="c-sub">Distribuição mensal · Google Ads</div><div class="chart-wrap tall"><canvas id="chShare"></canvas></div></div>
+    <div class="card reveal"><h3>Custos por Etapa</h3><div class="c-sub">CPL e CPMQL mês a mês · CPSQL até Fev</div><div class="chart-wrap tall"><canvas id="chCustos"></canvas></div></div>
+  </div>
+</section>
+<div class="divider"><hr></div>
+
+<!-- ============ CAMPANHAS ============ -->
+<section class="section" id="campanhas">
+  <div class="sec-head">
+    <div>
+      <div class="sec-eyebrow"><span class="sec-num">03</span>Google Ads</div>
+      <div class="sec-title">Performance por Campanha — Q2</div>
+      <p class="sec-desc">Detalhamento mensal · Abril a Junho (Q1 disponível no relatório anterior)</p>
+    </div>
+  </div>
+  <div class="tabs" id="tabsCamp">
+    <button class="tab active" data-pane="pAbr">Abril</button>
+    <button class="tab" data-pane="pMai">Maio</button>
+    <button class="tab" data-pane="pJun">Junho</button>
+  </div>
+
+  <div class="tab-pane show" id="pAbr"><div class="tbl-wrap"><table>
+    <thead><tr><th>Campanha</th><th class="num">Invest.</th><th class="num">Impr.</th><th class="num">Cliques</th><th class="num">CTR</th><th class="num">Leads</th><th class="num">Tx. Conv</th><th class="num">CPL</th><th class="num">Share</th></tr></thead>
+    <tbody>
+      <tr><td>Transp. Químico</td><td class="num">R$ 1.003,54</td><td class="num">2.244</td><td class="num">238</td><td class="num">10,61%</td><td class="num">32</td><td class="num">13,45%</td><td class="num">R$ 31,36</td><td class="num">66,7%</td></tr>
+      <tr><td>Armazenagem</td><td class="num">R$ 553,19</td><td class="num">4.204</td><td class="num">228</td><td class="num">5,42%</td><td class="num">14</td><td class="num">6,14%</td><td class="num">R$ 39,51</td><td class="num">29,2%</td></tr>
+      <tr><td>Container</td><td class="num">R$ 458,16</td><td class="num">1.855</td><td class="num">137</td><td class="num">7,39%</td><td class="num">2</td><td class="num">1,46%</td><td class="num">R$ 229,08</td><td class="num">4,2%</td></tr>
+      <tr><td>Automotivo</td><td class="num">R$ 74,65</td><td class="num">108</td><td class="num">9</td><td class="num">8,33%</td><td class="num">0</td><td class="num">0,00%</td><td class="num">—</td><td class="num">0,0%</td></tr>
+    </tbody></table></div></div>
+
+  <div class="tab-pane" id="pMai"><div class="tbl-wrap"><table>
+    <thead><tr><th>Campanha</th><th class="num">Invest.</th><th class="num">Impr.</th><th class="num">Cliques</th><th class="num">CTR</th><th class="num">Leads</th><th class="num">Tx. Conv</th><th class="num">CPL</th><th class="num">Share</th></tr></thead>
+    <tbody>
+      <tr><td>Transp. Químico</td><td class="num">R$ 785,44</td><td class="num">1.443</td><td class="num">161</td><td class="num">11,16%</td><td class="num">20</td><td class="num">12,42%</td><td class="num">R$ 39,27</td><td class="num">52,6%</td></tr>
+      <tr><td>Armazenagem</td><td class="num">R$ 479,85</td><td class="num">3.284</td><td class="num">159</td><td class="num">4,84%</td><td class="num">11</td><td class="num">6,92%</td><td class="num">R$ 43,62</td><td class="num">28,9%</td></tr>
+      <tr><td>Container</td><td class="num">R$ 358,58</td><td class="num">827</td><td class="num">89</td><td class="num">10,76%</td><td class="num">5</td><td class="num">5,62%</td><td class="num">R$ 71,72</td><td class="num">13,2%</td></tr>
+      <tr><td>Log. Promocional <span class="tag-you">NOVA</span></td><td class="num">R$ 407,34</td><td class="num">647</td><td class="num">57</td><td class="num">8,81%</td><td class="num">2</td><td class="num">3,51%</td><td class="num">R$ 203,67</td><td class="num">5,3%</td></tr>
+    </tbody></table></div></div>
+
+  <div class="tab-pane" id="pJun"><div class="tbl-wrap"><table>
+    <thead><tr><th>Campanha</th><th class="num">Invest.</th><th class="num">Impr.</th><th class="num">Cliques</th><th class="num">CTR</th><th class="num">Leads</th><th class="num">Tx. Conv</th><th class="num">CPL</th><th class="num">Share</th></tr></thead>
+    <tbody>
+      <tr><td>Transp. Químico</td><td class="num">R$ 1.032,05</td><td class="num">1.729</td><td class="num">202</td><td class="num">11,68%</td><td class="num">26</td><td class="num">12,87%</td><td class="num">R$ 39,69</td><td class="num">74,3%</td></tr>
+      <tr><td>Armazenagem</td><td class="num">R$ 410,32</td><td class="num">1.788</td><td class="num">148</td><td class="num">8,28%</td><td class="num">5</td><td class="num">3,38%</td><td class="num">R$ 82,06</td><td class="num">14,3%</td></tr>
+      <tr><td>Container</td><td class="num">R$ 477,82</td><td class="num">1.411</td><td class="num">97</td><td class="num">6,87%</td><td class="num">4</td><td class="num">4,12%</td><td class="num">R$ 119,46</td><td class="num">11,4%</td></tr>
+      <tr><td>Log. Promocional</td><td class="num">R$ 108,01</td><td class="num">84</td><td class="num">11</td><td class="num">13,10%</td><td class="num">0</td><td class="num">0,00%</td><td class="num">—</td><td class="num">0,0%</td></tr>
+    </tbody></table></div></div>
+
+  <div class="card reveal" style="margin-top:18px">
+    <h3>Top Palavras-chave</h3><div class="c-sub">Melhor performance · últimos 120 dias</div>
+    <div class="tbl-wrap" style="margin-top:8px;border:0"><table>
+      <thead><tr><th>Palavra-chave</th><th class="num">Impressões</th><th class="num">Cliques</th><th class="num">Custo</th><th class="num">Conv.</th><th class="num">CPL</th></tr></thead>
+      <tbody>
+        <tr><td>Transportadora produtos químicos</td><td class="num">3.623</td><td class="num">283</td><td class="num">R$ 1.526,56</td><td class="num">40</td><td class="num">R$ 38,16</td></tr>
+        <tr><td>Transporte de produtos químicos</td><td class="num">2.184</td><td class="num">125</td><td class="num">R$ 510,81</td><td class="num">11</td><td class="num">R$ 44,70</td></tr>
+        <tr><td>Transporte de cargas perigosas</td><td class="num">3.949</td><td class="num">172</td><td class="num">R$ 503,92</td><td class="num">9</td><td class="num">R$ 58,79</td></tr>
+        <tr><td>Armazenagem e logística</td><td class="num">2.216</td><td class="num">87</td><td class="num">R$ 391,39</td><td class="num">9</td><td class="num">R$ 45,66</td></tr>
+        <tr><td>Transporte de Container</td><td class="num">163</td><td class="num">11</td><td class="num">R$ 46,90</td><td class="num">3</td><td class="num">R$ 15,63</td></tr>
+      </tbody></table></div>
+  </div>
+</section>
+<div class="divider"><hr></div>
+<!-- ============ IMPACTO COMERCIAL ============ -->
+<section class="section" id="roas">
+  <div class="sec-head">
+    <div>
+      <div class="sec-eyebrow"><span class="sec-num">04</span>Impacto Comercial</div>
+      <div class="sec-title">Receita, ROAS &amp; Oportunidades</div>
+      <p class="sec-desc">Receita atribuída por indicação (DRE) e controle de receptivos comerciais · Jan–Jun.</p>
+    </div>
+    <span class="badge-ok">FONTE: DRE MKT + RECEPTIVOS</span>
+  </div>
+  <div class="kpi-grid reveal">
+    <div class="kpi hl"><div class="k-label">Receita — Mídia (MKT)</div><div class="k-value" data-count="41681.56" data-fmt="brl">R$ 0</div><div class="k-note">7 clientes faturados no S1</div></div>
+    <div class="kpi"><div class="k-label">ROAS Mídia S1</div><div class="k-value">2,67x</div><div class="k-note">R$ 41,7 mil / R$ 15,6 mil</div></div>
+    <div class="kpi hl"><div class="k-label">Receita — Ramper (CRM)</div><div class="k-value">R$ 1,16 mi</div><div class="k-note up">20,4% do fatto rastreado</div></div>
+    <div class="kpi"><div class="k-label">Receptivos S1</div><div class="k-value" data-count="196" data-fmt="int">0</div><div class="k-note up">Q2: 115 vs Q1: 81</div></div>
+    <div class="kpi"><div class="k-label">Ticket Médio</div><div class="k-value">R$ 5.955</div><div class="k-note">por venda</div></div>
+    <div class="kpi"><div class="k-label">Em Negociação</div><div class="k-value" data-count="6" data-fmt="int">0</div><div class="k-note up">5 abertas em Mai–Jun</div></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card reveal">
+      <h3>Clientes Convertidos — S1</h3><div class="c-sub">Q1 conforme apresentado · Q2 via DRE (indicação MKT)</div>
+      <div class="tbl-wrap" style="margin-top:8px;border:0"><table style="min-width:460px">
+        <thead><tr><th>Cliente</th><th>Mês</th><th class="num">Receita</th></tr></thead>
+        <tbody>
+          <tr><td>BN Comercial Tubos e Conexões</td><td>Janeiro</td><td class="num">R$ 8.918,65</td></tr>
+          <tr><td>Seara Alimentos</td><td>Janeiro</td><td class="num">R$ 11.052,20</td></tr>
+          <tr><td>ARS Ind. de Parafusos</td><td>Fevereiro</td><td class="num">R$ 1.116,36</td></tr>
+          <tr><td>Serena Ind. Química</td><td>Fevereiro</td><td class="num">R$ 1.512,49</td></tr>
+          <tr><td>Tendas Promocionais</td><td>Fevereiro</td><td class="num">R$ 743,24</td></tr>
+          <tr><td>RGB Megashop</td><td>Junho</td><td class="num">R$ 17.258,79</td></tr>
+          <tr><td>Elemento Sustentável</td><td>Junho</td><td class="num">R$ 1.079,83</td></tr>
+          <tr class="total"><td>Total S1</td><td></td><td class="num">R$ 41.681,56</td></tr>
+        </tbody></table></div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:10px">+ JOTUN Brasil: receptivo de Abril via Google, operações spot aprovadas em 07/07 — receita entra no 2º semestre.</div>
+    </div>
+    <div class="card reveal">
+      <h3>Onde os Receptivos Encontraram a BMX</h3><div class="c-sub">196 receptivos comerciais · S1 2026</div>
+      <div class="chart-wrap tall"><canvas id="chOrigem"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card reveal" style="margin-top:14px">
+    <h3>Funil Comercial — Receptivos S1</h3><div class="c-sub">Controle de receptivos · todas as origens · critério: SQL = houve análise/validação comercial registrada</div>
+    <div class="funnel" style="margin-top:16px">
+      <div class="f-row"><div class="f-bar" style="width:100%"><span class="f-name">Receptivos</span><span class="f-val">196</span></div><div class="f-meta">Q2: 115 · <b>+42%</b> vs Q1 (81)</div></div>
+      <div class="f-row"><div class="f-bar" style="width:68%"><span class="f-name">Dentro do Perfil</span><span class="f-val">134</span></div><div class="f-meta">62 fora de perfil (fracionado, PF, fora de escopo)</div></div>
+      <div class="f-row"><div class="f-bar" style="width:26%"><span class="f-name">SQL — Análise Real</span><span class="f-val">50</span></div><div class="f-meta">cotações, FISPQ, BIDs, declinados avaliados</div></div>
+      <div class="f-row"><div class="f-bar" style="width:16%"><span class="f-name">Propostas</span><span class="f-val">31</span></div><div class="f-meta">62% dos SQLs viram proposta</div></div>
+      <div class="f-row"><div class="f-bar" style="width:16%"><span class="f-name">Fechadas + Negociação</span><span class="f-val">4 + 6</span></div><div class="f-meta"><b>JOTUN</b> aprovada 07/07 · 5 negociações de Mai–Jun</div></div>
+    </div>
+    <div style="font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:12px">Recorte digital (Google + Site + E-mail): 172 receptivos · 165 no perfil · 25 propostas · 3 fechadas + 4 em negociação.</div>
+  </div>
+
+  <div class="card reveal" style="margin-top:14px">
+    <h3>Receita por Indicação — Fatto Rastreado</h3><div class="c-sub">DRE · distribuição do faturamento por origem · S1 2026 = R$ 5,67 mi</div>
+    <div class="chart-wrap"><canvas id="chIndicacao"></canvas></div>
+    <div style="font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:10px">Digital responde por R$ 1,19 mi do fatto rastreado (21%): R$ 1,16 mi via prospecção Ramper (CRM) + R$ 30,5 mil via mídia paga. FMC = força comercial.</div>
+  </div>
+
+  <div class="insight reveal">
+    <div class="i-title">Leitura comercial</div>
+    <p>O digital fecha o semestre com <b>R$ 1,2 milhão em receita rastreada</b> (Ramper + mídia) e um pipeline aquecendo: dos 6 receptivos em negociação, <b>5 entraram entre maio e junho</b> — Embafac, Pro Serv, Flora Nectar, Ultramedi e Adimax — além da <b>JOTUN, aprovada em 07/07</b> a partir de um receptivo de abril via Google. O ciclo de venda B2B é longo: o recorde de leads do Q2 deve maturar em receita ao longo do 2º semestre.</p>
+  </div>
+</section>
+<div class="divider"><hr></div>
+
+<!-- ============ SOCIAL: INSTAGRAM ============ -->
+<section class="section" id="social">
+  <div class="sec-head">
+    <div>
+      <div class="sec-eyebrow"><span class="sec-num">05</span>Redes Sociais</div>
+      <div class="sec-title">Instagram — @bmx_servicos</div>
+      <p class="sec-desc">Conteúdo orgânico · Janeiro a Junho 2026</p>
+    </div>
+    <span class="badge-ok">SEMESTRE FECHADO</span>
+  </div>
+  <div class="kpi-grid reveal">
+    <div class="kpi hl"><div class="k-label">Alcance S1</div><div class="k-value" data-count="20978" data-fmt="int">0</div><div class="k-note up">Jun: 8.134 — recorde do ano</div></div>
+    <div class="kpi"><div class="k-label">Visualizações S1</div><div class="k-value" data-count="50980" data-fmt="int">0</div><div class="k-note up">Jun: 21.876</div></div>
+    <div class="kpi"><div class="k-label">Interações S1</div><div class="k-value" data-count="2815" data-fmt="int">0</div><div class="k-note up">Jun: 1.336 (+192% vs Mai)</div></div>
+    <div class="kpi"><div class="k-label">Novos Seguidores</div><div class="k-value" data-count="220" data-fmt="int">0</div><div class="k-note">Base total: 3.258</div></div>
+    <div class="kpi"><div class="k-label">Posts Q2 (feed)</div><div class="k-value" data-count="26" data-fmt="int">0</div><div class="k-note">Abr 6 · Mai 8 · Jun 12</div></div>
+  </div>
+
+  <div class="insight reveal">
+    <div class="i-title">Destaque do trimestre — Radar Logístico</div>
+    <p><b>Junho foi o melhor mês orgânico do ano</b>: 8.134 de alcance (+119% vs maio), 21.876 visualizações e 1.336 interações — com <b>52% do consumo vindo de não-seguidores</b>, forte sinal de descoberta. O motor foi a série <b>Radar Logístico em Reels</b>: as 4 maiores peças do trimestre são episódios da série, com pico de 3.374 views.</p>
+  </div>
+
+  <div class="grid-2">
+    <div class="card reveal"><h3>Alcance vs Interações</h3><div class="c-sub">Mensal · Jan–Jun</div><div class="chart-wrap"><canvas id="chIgAlcance"></canvas></div></div>
+    <div class="card reveal"><h3>Visualizações</h3><div class="c-sub">Mensal · Jan–Jun</div><div class="chart-wrap"><canvas id="chIgViews"></canvas></div></div>
+    <div class="card reveal"><h3>Novos Seguidores e Visitas ao Perfil</h3><div class="c-sub">Mensal · Jan–Jun</div><div class="chart-wrap"><canvas id="chIgSeg"></canvas></div></div>
+    <div class="card reveal"><h3>Taxa de Engajamento</h3><div class="c-sub">Interações / Alcance · %</div><div class="chart-wrap"><canvas id="chIgTx"></canvas></div></div>
+  </div>
+
+  <div class="sec-head" style="margin-top:26px"><div><div class="sec-title" style="font-size:24px">Top Publicações — Q2</div></div></div>
+  <div class="grid-3">
+    <div class="post-card reveal"><div class="post-rank">1</div><div class="post-txt">🎙️ Radar Logístico — "O que você precisa saber sobre o mercado logístico na última semana"</div><div class="post-meta">Reel · 12/06/2026</div><div class="post-stats"><div><b>2.515</b>views</div><div><b>155</b>curtidas</div><div><b>37</b>shares</div><div><b>36</b>coment.</div></div></div>
+    <div class="post-card reveal"><div class="post-rank">2</div><div class="post-txt">🛢️ Radar Logístico — "Petróleo em queda, reabertura do Estreito de Ormuz e o avanço dos caminhões"</div><div class="post-meta">Reel · 26/06/2026</div><div class="post-stats"><div><b>3.374</b>views</div><div><b>127</b>curtidas</div><div><b>41</b>coment.</div><div><b>5</b>segue</div></div></div>
+    <div class="post-card reveal"><div class="post-rank">3</div><div class="post-txt">📊 Radar Logístico — "Os principais movimentos da economia, do comércio global e da logística"</div><div class="post-meta">Reel · 19/06/2026</div><div class="post-stats"><div><b>1.802</b>views</div><div><b>115</b>curtidas</div><div><b>22</b>shares</div><div><b>28</b>coment.</div></div></div>
+  </div>
+</section>
+<div class="divider"><hr></div>
+
+<!-- ============ SOCIAL: LINKEDIN ============ -->
+<section class="section" id="linkedin">
+  <div class="sec-head">
+    <div>
+      <div class="sec-eyebrow">Redes Sociais</div>
+      <div class="sec-title">LinkedIn — BMX Serviços</div>
+      <p class="sec-desc">Conteúdo orgânico e análise competitiva · Janeiro a Junho 2026</p>
+    </div>
+  </div>
+  <div class="kpi-grid reveal">
+    <div class="kpi hl"><div class="k-label">Novos Seguidores S1</div><div class="k-value" data-count="726" data-fmt="int">0</div><div class="k-note up">Recordes: Abr (+162) e Mai (+165)</div></div>
+    <div class="kpi"><div class="k-label">Publicações S1</div><div class="k-value" data-count="45" data-fmt="int">0</div><div class="k-note">Jun: 13 — maior cadência</div></div>
+    <div class="kpi"><div class="k-label">Impressões Orgânicas</div><div class="k-value" data-count="34460" data-fmt="int">0</div><div class="k-note">+ 145 mil patrocinadas (Ads)</div></div>
+    <div class="kpi"><div class="k-label">Reações S1</div><div class="k-value" data-count="1069" data-fmt="int">0</div><div class="k-note">fonte: análise competitiva</div></div>
+    <div class="kpi"><div class="k-label">Comentários S1</div><div class="k-value" data-count="93" data-fmt="int">0</div><div class="k-note">2º maior entre 10 players</div></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card reveal"><h3>Impressões Orgânicas</h3><div class="c-sub">Mensal · Jan–Jun</div><div class="chart-wrap"><canvas id="chLiImpr"></canvas></div></div>
+    <div class="card reveal"><h3>Novos Seguidores</h3><div class="c-sub">Mensal · orgânico + patrocinado</div><div class="chart-wrap"><canvas id="chLiSeg"></canvas></div></div>
+  </div>
+
+  <div class="card reveal" style="margin-top:14px">
+    <h3>Análise Competitiva</h3><div class="c-sub">BMX vs concorrentes no LinkedIn · 01/01–30/06/2026</div>
+    <div class="tbl-wrap" style="margin-top:8px;border:0"><table>
+      <thead><tr><th>#</th><th>Empresa</th><th class="num">Novos Seguidores</th><th class="num">Publicações</th><th class="num">Comentários</th><th class="num">Reações</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Luft Logistics</td><td class="num">10.317</td><td class="num">166</td><td class="num">164</td><td class="num">4.237</td></tr>
+        <tr><td>2</td><td>Mundial Logistics</td><td class="num">3.252</td><td class="num">110</td><td class="num">98</td><td class="num">3.039</td></tr>
+        <tr><td>3</td><td>Grupo Mirassol</td><td class="num">2.039</td><td class="num">76</td><td class="num">72</td><td class="num">2.604</td></tr>
+        <tr class="me"><td>4</td><td>BMX Serviços<span class="tag-you">VOCÊ</span></td><td class="num">726</td><td class="num">45</td><td class="num">93</td><td class="num">1.069</td></tr>
+        <tr><td>5</td><td>GT Solutions</td><td class="num">725</td><td class="num">40</td><td class="num">45</td><td class="num">2.786</td></tr>
+        <tr><td>6</td><td>PierServ Logística</td><td class="num">607</td><td class="num">47</td><td class="num">35</td><td class="num">1.003</td></tr>
+        <tr><td>7</td><td>Covre Transportes</td><td class="num">578</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+        <tr><td>8</td><td>GAB Transportes</td><td class="num">378</td><td class="num">32</td><td class="num">11</td><td class="num">775</td></tr>
+        <tr><td>9</td><td>Comando Transporte</td><td class="num">329</td><td class="num">7</td><td class="num">-1</td><td class="num">86</td></tr>
+        <tr><td>10</td><td>TGA Logística</td><td class="num">146</td><td class="num">17</td><td class="num">7</td><td class="num">123</td></tr>
+      </tbody></table></div>
+    <div class="insight" style="margin-top:14px">
+      <div class="i-title">Posição competitiva</div>
+      <p>A BMX subiu de <b>7º (Q1) para 4º lugar</b> em novos seguidores no acumulado do semestre, ultrapassando GT Solutions. Nos últimos 30 dias, é <b>2ª em cadência e reações</b> (atrás só da Luft) e <b>lidera o crescimento de publicações (+85,7%)</b>. Comentários seguem como força: 2º lugar absoluto — conversa real, não só alcance.</p>
+    </div>
+  </div>
+
+  <div class="sec-head" style="margin-top:26px"><div><div class="sec-title" style="font-size:24px">Posts Destaque — Q2</div></div></div>
+  <div class="grid-3">
+    <div class="post-card reveal"><div class="post-rank">1</div><div class="post-txt">"Estamos contratando! Confira as novas oportunidades..."</div><div class="post-meta">Orgânico · 23/06/2026</div><div class="post-stats"><div><b>2.467</b>impressões</div><div><b>729</b>cliques</div><div><b>734</b>engaj. total</div></div></div>
+    <div class="post-card reveal"><div class="post-rank">2</div><div class="post-txt">"Essa mudança da ANTT tem gerado muitas conversas..."</div><div class="post-meta">Orgânico · 17/04/2026</div><div class="post-stats"><div><b>810</b>impressões</div><div><b>518</b>cliques</div><div><b>522</b>engaj. total</div></div></div>
+    <div class="post-card reveal"><div class="post-rank">3</div><div class="post-txt">"Nem toda operação problemática começa com uma falha..."</div><div class="post-meta">Orgânico · 22/04/2026</div><div class="post-stats"><div><b>682</b>impressões</div><div><b>388</b>cliques</div><div><b>392</b>engaj. total</div></div></div>
+  </div>
+
+  <div class="grid-3" style="margin-top:14px">
+    <div class="card reveal"><h3>Seguidores por Função</h3><div class="c-sub">Base atual da página</div>
+      <div class="hbars" data-hbars>
+        <div class="hb"><span class="hb-l">Operações</span><div class="hb-track"><div class="hb-fill" data-w="100"></div></div><span class="hb-v">8.165</span></div>
+        <div class="hb"><span class="hb-l">Desenv. Negócios</span><div class="hb-track"><div class="hb-fill" data-w="22"></div></div><span class="hb-v">1.827</span></div>
+        <div class="hb"><span class="hb-l">Vendas</span><div class="hb-track"><div class="hb-fill" data-w="21"></div></div><span class="hb-v">1.714</span></div>
+        <div class="hb"><span class="hb-l">Compras</span><div class="hb-track"><div class="hb-fill" data-w="12"></div></div><span class="hb-v">1.008</span></div>
+        <div class="hb"><span class="hb-l">Administração</span><div class="hb-track"><div class="hb-fill" data-w="12"></div></div><span class="hb-v">970</span></div>
+        <div class="hb"><span class="hb-l">TI</span><div class="hb-track"><div class="hb-fill" data-w="9"></div></div><span class="hb-v">726</span></div>
+      </div></div>
+    <div class="card reveal"><h3>Seguidores por Setor</h3><div class="c-sub">Base atual da página</div>
+      <div class="hbars" data-hbars>
+        <div class="hb"><span class="hb-l">Transp., Armaz. e Correio</span><div class="hb-track"><div class="hb-fill" data-w="100"></div></div><span class="hb-v">5.688</span></div>
+        <div class="hb"><span class="hb-l">Transp. Rodov. de Carga</span><div class="hb-track"><div class="hb-fill" data-w="32"></div></div><span class="hb-v">1.802</span></div>
+        <div class="hb"><span class="hb-l">Comércio Varejista</span><div class="hb-track"><div class="hb-fill" data-w="17"></div></div><span class="hb-v">947</span></div>
+        <div class="hb"><span class="hb-l">Serviços de TI</span><div class="hb-track"><div class="hb-fill" data-w="13"></div></div><span class="hb-v">718</span></div>
+        <div class="hb"><span class="hb-l">Fab. Veículos</span><div class="hb-track"><div class="hb-fill" data-w="13"></div></div><span class="hb-v">714</span></div>
+        <div class="hb"><span class="hb-l">Prod. Químicos</span><div class="hb-track"><div class="hb-fill" data-w="8"></div></div><span class="hb-v">483</span></div>
+      </div></div>
+    <div class="card reveal"><h3>Seguidores por Porte</h3><div class="c-sub">Funcionários da empresa</div>
+      <div class="hbars" data-hbars>
+        <div class="hb"><span class="hb-l">+ de 10.001</span><div class="hb-track"><div class="hb-fill" data-w="100"></div></div><span class="hb-v">4.060</span></div>
+        <div class="hb"><span class="hb-l">1.001 – 5.000</span><div class="hb-track"><div class="hb-fill" data-w="74"></div></div><span class="hb-v">3.013</span></div>
+        <div class="hb"><span class="hb-l">51 – 200</span><div class="hb-track"><div class="hb-fill" data-w="59"></div></div><span class="hb-v">2.377</span></div>
+        <div class="hb"><span class="hb-l">201 – 500</span><div class="hb-track"><div class="hb-fill" data-w="51"></div></div><span class="hb-v">2.081</span></div>
+        <div class="hb"><span class="hb-l">11 – 50</span><div class="hb-track"><div class="hb-fill" data-w="41"></div></div><span class="hb-v">1.655</span></div>
+        <div class="hb"><span class="hb-l">501 – 1.000</span><div class="hb-track"><div class="hb-fill" data-w="40"></div></div><span class="hb-v">1.624</span></div>
+      </div></div>
+  </div>
+</section>
+<div class="divider"><hr></div>
+<!-- ============ EMAIL ============ -->
+<section class="section" id="email">
+  <div class="sec-head">
+    <div>
+      <div class="sec-eyebrow"><span class="sec-num">06</span>CRM Marketing</div>
+      <div class="sec-title">E-mail Marketing</div>
+      <p class="sec-desc">Da ativação comercial (Q1) à nutrição da base com a newsletter (Q2) — duas fases, duas réguas.</p>
+    </div>
+    <span class="badge-ok">FLUXO DE JUNHO + ATIVAÇÃO EM CURSO</span>
+  </div>
+
+  <div class="insight reveal">
+    <div class="i-title">Como ler esta seção</div>
+    <p>O semestre teve duas fases: no <b>Q1, ativação direta</b> — disparos segmentados buscando resposta imediata. No <b>Q2, a nova estratégia</b>: a newsletter Radar Logístico nutre a base inteira, o engajamento classifica os <b>leads quentes</b>, e o time comercial ativa 1:1 só quem demonstrou interesse — funil completo, da nutrição à proposta.</p>
+  </div>
+
+  <div class="sec-head" style="margin-top:22px">
+    <div>
+      <div class="sec-eyebrow">Fase 1</div>
+      <div class="sec-title" style="font-size:26px">Resultados Q1 — Ativação Direta</div>
+      <p class="sec-desc">Disparos segmentados por nicho com objetivo de resposta imediata: e-mail certo, para a lista certa, medindo abertura e clique.</p>
+    </div>
+  </div>
+  <div class="funnel reveal">
+    <div class="f-row"><div class="f-bar" style="width:100%"><span class="f-name">Disparos</span><span class="f-val">1.650</span></div><div class="f-meta">3 campanhas · março · Químico + Automotivo + Log Promo</div></div>
+    <div class="f-row"><div class="f-bar" style="width:58%"><span class="f-name">Aberturas</span><span class="f-val">961</span></div><div class="f-meta"><b>58,2%</b> de taxa média · pico 66% (Automotivo)</div></div>
+    <div class="f-row"><div class="f-bar" style="width:42%"><span class="f-name">Cliques</span><span class="f-val">3.771</span></div><div class="f-meta">volume absoluto · quem abre, clica</div></div>
+  </div>
+
+  <div class="grid-3">
+    <div class="post-card reveal">
+      <h3 style="font-family:var(--disp);text-transform:uppercase;font-size:19px">Transp. Químico</h3>
+      <div class="post-txt">"Transporte químico exige estrutura real."</div>
+      <div class="post-meta">24/03/2026 · Lista QUÍMICO_TIGERLOG_FTL_CNTR</div>
+      <div class="post-stats"><div><b>684</b>enviados</div><div><b>61,99%</b>abertura</div><div><b>1.702</b>cliques</div></div>
+      <span class="mail-status good">ABERTURA ACIMA DE 60%</span>
+    </div>
+    <div class="post-card reveal">
+      <h3 style="font-family:var(--disp);text-transform:uppercase;font-size:19px">Automotivo</h3>
+      <div class="post-txt">"O risco invisível que pode interromper sua produção"</div>
+      <div class="post-meta">26/03/2026 · Lista Automotivo_Máquinas_Equipamentos</div>
+      <div class="post-stats"><div><b>480</b>enviados</div><div><b>66,04%</b>abertura</div><div><b>1.196</b>cliques</div></div>
+      <span class="mail-status good">ABERTURA ACIMA DE 60%</span>
+    </div>
+    <div class="post-card reveal">
+      <h3 style="font-family:var(--disp);text-transform:uppercase;font-size:19px">Log Promocional</h3>
+      <div class="post-txt">"Quando há uma falha logística, a campanha não acontece"</div>
+      <div class="post-meta">31/03/2026 · Lista Bens_Brinq_Eletro_Metalurg</div>
+      <div class="post-stats"><div><b>486</b>enviados</div><div><b>45,27%</b>abertura</div><div><b>873</b>cliques</div></div>
+      <span class="mail-status mid">ABERTURA MODERADA</span>
+    </div>
+  </div>
+
+  <div class="sec-head" style="margin-top:34px">
+    <div>
+      <div class="sec-eyebrow">Fase 2</div>
+      <div class="sec-title" style="font-size:26px">Resultados Q2 — Nova Estratégia: Newsletter Radar Logístico</div>
+      <p class="sec-desc">Criamos um novo formato de maturar a base: em vez de vender no primeiro contato, a newsletter <b>nutre e educa</b> — e o comportamento de abertura revela quem está pronto para conversar. Fluxo de 3 ondas em junho:</p>
+    </div>
+  </div>
+  <div class="kpi-grid reveal">
+    <div class="kpi hl"><div class="k-label">Base Válida</div><div class="k-value" data-count="5829" data-fmt="int">0</div><div class="k-note">1.044 inválidos higienizados</div></div>
+    <div class="kpi"><div class="k-label">Abertura 1º Envio</div><div class="k-value">42,6%</div><div class="k-note">base completa</div></div>
+    <div class="kpi hl"><div class="k-label">Abertura 3º Envio</div><div class="k-value">96,5%</div><div class="k-note up">leads engajados</div></div>
+    <div class="kpi"><div class="k-label">CTOR 1º Envio</div><div class="k-value">78,7%</div><div class="k-note up">quem abre, clica</div></div>
+    <div class="kpi"><div class="k-label">Entregabilidade</div><div class="k-value">98,3%</div><div class="k-note up">3º envio</div></div>
+    <div class="kpi"><div class="k-label">Descadastros</div><div class="k-value">22</div><div class="k-note up">≤0,16% por envio</div></div>
+  </div>
+
+  <div class="tbl-wrap reveal"><table>
+    <thead><tr><th>Disparo</th><th>Data</th><th>Segmento</th><th class="num">Entregues</th><th class="num">Aberturas</th><th class="num">Cliques</th><th class="num">Descad.</th></tr></thead>
+    <tbody>
+      <tr><td>1º · Base Total</td><td>02/06</td><td>Todos os leads</td><td class="num">5.829</td><td class="num">2.483 · 42,6%</td><td class="num">1.953</td><td class="num">10</td></tr>
+      <tr><td>2º · Reengajamento</td><td>08/06</td><td>Não abriu o 1º</td><td class="num">4.527 · 90,2%</td><td class="num">1.964 · 39,1%</td><td class="num">8.121*</td><td class="num">8</td></tr>
+      <tr><td>3º · Leads Quentes</td><td>15/06</td><td>Já engajou</td><td class="num">2.864 · 98,3%</td><td class="num">2.812 · 96,5%</td><td class="num">8.059*</td><td class="num">4</td></tr>
+    </tbody></table></div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:8px">*Cliques em volume absoluto (mesmo lead clica em vários links). Estratégia: dispara para a base → reimpacta quem não abriu → aprofunda em quem engajou.</div>
+
+  <div class="grid-2">
+    <div class="card reveal"><h3>Abertura por Onda</h3><div class="c-sub">A segmentação eleva o engajamento a cada envio</div><div class="chart-wrap"><canvas id="chMailOndas"></canvas></div></div>
+    <div class="card reveal">
+      <h3>Saúde da Base</h3><div class="c-sub">Diagnóstico do 1º envio · oportunidade de higienização</div>
+      <div class="hbars" data-hbars style="margin-top:14px">
+        <div class="hb"><span class="hb-l">Base válida</span><div class="hb-track"><div class="hb-fill" data-w="100"></div></div><span class="hb-v">5.829</span></div>
+        <div class="hb"><span class="hb-l">Abriram (1º envio)</span><div class="hb-track"><div class="hb-fill" data-w="43"></div></div><span class="hb-v">2.483</span></div>
+        <div class="hb"><span class="hb-l">Leads quentes (3º)</span><div class="hb-track"><div class="hb-fill" data-w="49"></div></div><span class="hb-v">2.864</span></div>
+        <div class="hb"><span class="hb-l">Inválidos removidos</span><div class="hb-track"><div class="hb-fill" data-w="18" style="background:var(--neg)"></div></div><span class="hb-v">1.044</span></div>
+      </div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:14px">15,2% de contatos inválidos no 1º envio — higienizar a lista amplia o alcance real da nutrição nas próximas edições.</div>
+    </div>
+  </div>
+
+  <div class="sec-head" style="margin-top:30px">
+    <div>
+      <div class="sec-eyebrow">Fase 2 · continuação</div>
+      <div class="sec-title" style="font-size:26px">Do Engajamento à Proposta — Funil Comercial da Newsletter</div>
+      <p class="sec-desc">A nutrição classifica; o comercial ativa. Dos 2.864 leads quentes, priorizamos 70 contas com maior potencial, em 8 nichos, com roteiro de abordagem próprio (e-mail → WhatsApp, tom consultivo) — e a ativação já está colhendo frutos.</p>
+    </div>
+  </div>
+
+  <div class="funnel reveal">
+    <div class="f-row"><div class="f-bar" style="width:100%"><span class="f-name">Base Válida</span><span class="f-val">5.829</span></div><div class="f-meta">nutrição via newsletter</div></div>
+    <div class="f-row"><div class="f-bar" style="width:49%"><span class="f-name">Leads Quentes</span><span class="f-val">2.864</span></div><div class="f-meta">abriram os 3 disparos · 96,5% de abertura</div></div>
+    <div class="f-row"><div class="f-bar" style="width:24%"><span class="f-name">Lista de Ativação</span><span class="f-val">70</span></div><div class="f-meta">priorizados em <b>8 nichos</b> · abordagem pronta por nicho</div></div>
+    <div class="f-row"><div class="f-bar" style="width:12%"><span class="f-name">Ativados</span><span class="f-val">17</span></div><div class="f-meta">3 consultores · e-mail → WhatsApp</div></div>
+    <div class="f-row"><div class="f-bar" style="width:8%"><span class="f-name">Frutos</span><span class="f-val">6</span></div><div class="f-meta"><b>2 reuniões · 2 propostas em volume · 1 BID · 1 proposta enviada</b></div></div>
+  </div>
+
+  <div class="grid-2" style="margin-top:14px">
+    <div class="card reveal">
+      <h3>Lista de Ativação por Nicho</h3><div class="c-sub">70 leads quentes priorizados · roteiro de e-mail + WhatsApp por nicho</div>
+      <div class="hbars" data-hbars style="margin-top:12px">
+        <div class="hb"><span class="hb-l">Químico &amp; Agroquímico</span><div class="hb-track"><div class="hb-fill" data-w="100"></div></div><span class="hb-v">14</span></div>
+        <div class="hb"><span class="hb-l">Embalagens &amp; Plásticos</span><div class="hb-track"><div class="hb-fill" data-w="86"></div></div><span class="hb-v">12</span></div>
+        <div class="hb"><span class="hb-l">Alimentos &amp; Bens de Consumo</span><div class="hb-track"><div class="hb-fill" data-w="71"></div></div><span class="hb-v">10</span></div>
+        <div class="hb"><span class="hb-l">Indústria &amp; Equipamentos</span><div class="hb-track"><div class="hb-fill" data-w="71"></div></div><span class="hb-v">10</span></div>
+        <div class="hb"><span class="hb-l">Agroindústria &amp; Bioenergia</span><div class="hb-track"><div class="hb-fill" data-w="50"></div></div><span class="hb-v">7</span></div>
+        <div class="hb"><span class="hb-l">Comércio Exterior &amp; Trading</span><div class="hb-track"><div class="hb-fill" data-w="50"></div></div><span class="hb-v">7</span></div>
+        <div class="hb"><span class="hb-l">Serviços &amp; Tecnologia</span><div class="hb-track"><div class="hb-fill" data-w="36"></div></div><span class="hb-v">5</span></div>
+        <div class="hb"><span class="hb-l">Automotivo &amp; Autopeças</span><div class="hb-track"><div class="hb-fill" data-w="29"></div></div><span class="hb-v">4</span></div>
+      </div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:12px">Base com contas como Raízen, Syngenta, Yara, Brenntag, ZF, Pirelli, L'Oréal e Ajinomoto. Playbook: tom consultivo, CTA em pergunta, máx. 10–15 ativações/dia por executivo, personalização obrigatória.</div>
+    </div>
+    <div class="card reveal">
+      <h3>Frutos da Ativação — Status Atual</h3><div class="c-sub">17 contas abordadas pelo comercial · retornos em 3 semanas</div>
+      <div class="tbl-wrap" style="margin-top:8px;border:0"><table style="min-width:420px">
+        <thead><tr><th>Conta</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr class="me"><td>Wana Química</td><td>Reunião realizada · proposta CNTR + FTL, <b>+80 contêineres/mês</b></td></tr>
+          <tr class="me"><td>Trouw Nutrition</td><td>Evoluindo proposta de <b>60 contêineres/mês</b></td></tr>
+          <tr class="me"><td>Formica Brasil</td><td>Reunião agendada · <b>24/07</b></td></tr>
+          <tr class="me"><td>TK Elevator</td><td>Reunião agendada · <b>24/07</b></td></tr>
+          <tr><td>Aisin Automotive</td><td>Dados cadastrais solicitados para participação de BID</td></tr>
+          <tr><td>Brenntag</td><td>Proposta enviada · contatos de Comex mapeados</td></tr>
+          <tr><td>Demais contas (11)</td><td>Apresentação enviada · aguardando retorno / indicação de Comex</td></tr>
+        </tbody></table></div>
+    </div>
+  </div>
+
+  </section>
+<div class="divider"><hr></div>
+
+<!-- ============ PROJETOS ============ -->
+<section class="section" id="projetos">
+  <div class="sec-head">
+    <div>
+      <div class="sec-eyebrow"><span class="sec-num">07</span>Além da Mídia</div>
+      <div class="sec-title">Projetos Paralelos</div>
+      <p class="sec-desc">Ativos construídos no semestre para sustentar geração e nutrição de demanda.</p>
+    </div>
+    <span class="badge-wait">EBOOK E LPs: AGUARDANDO NÚMEROS</span>
+  </div>
+  <div class="grid-3">
+    <div class="card reveal">
+      <div class="sec-eyebrow" style="margin-bottom:6px">Lead Magnet</div>
+      <h3>Ebook — O Risco Invisível</h3>
+      <p style="color:var(--muted);font-size:13.5px;margin-top:8px">"O Risco Invisível que Pode Parar sua Linha de Produção" — isca de valor da campanha Automotivo, publicado no site e amplificado no calendário editorial de julho.</p>
+      <div class="post-stats" style="margin-top:14px"><div><b style="color:var(--faint)">—</b>downloads</div><div><b style="color:var(--faint)">—</b>leads gerados</div></div>
+    </div>
+    <div class="card reveal">
+      <div class="sec-eyebrow" style="margin-bottom:6px">Conversão</div>
+      <h3>Landing Pages</h3>
+      <p style="color:var(--muted);font-size:13.5px;margin-top:8px">Nova LP de Container construída e validada; LP de Armazenagem em implementação. Padrão lp.bmxservicos.com por serviço, com páginas de obrigado dedicadas para rastreio.</p>
+      <div class="post-stats" style="margin-top:14px"><div><b style="color:var(--faint)">—</b>conversões</div><div><b style="color:var(--faint)">—</b>tx. conversão</div></div>
+    </div>
+    <div class="card reveal" style="border-color:rgba(241,194,50,.4)">
+      <div class="sec-eyebrow" style="margin-bottom:6px">Nutrição</div>
+      <h3>Base Radar Logístico</h3>
+      <p style="color:var(--muted);font-size:13.5px;margin-top:8px">Nova estratégia de newsletter em operação: base higienizada, fluxo de 3 ondas rodando e segmento de leads quentes mapeado para ativação comercial.</p>
+      <div class="post-stats" style="margin-top:14px"><div><b>5.829</b>contatos válidos</div><div><b>2.864</b>leads engajados</div></div>
+    </div>
+  </div>
+</section>
+<div class="divider"><hr></div>
+
+<!-- ============ CENTRAL BMX ============ -->
+<section class="section" id="central">
+  <div class="sec-head">
+    <div>
+      <div class="sec-eyebrow"><span class="sec-num">08</span>Novidade</div>
+      <div class="sec-title">Central do Cliente BMX</div>
+      <p class="sec-desc">Portal exclusivo para acompanhamento do projeto — já disponível para o time BMX.</p>
+    </div>
+    <span class="badge-ok">DISPONÍVEL AGORA</span>
+  </div>
+  <div class="central reveal">
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:14px">
+        <div class="hero-bar" style="margin:0;width:40px"></div>
+        <div style="font-family:var(--disp);font-size:26px;font-weight:700;text-transform:uppercase">Tudo do projeto em um só lugar</div>
+      </div>
+      <a href="https://central-bmx.vercel.app" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:12px;background:var(--yellow);color:#161616;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">ACESSAR A CENTRAL ↗</a>
+    </div>
+    <p style="color:var(--muted);margin-top:12px;max-width:680px;font-size:14px">Planejamento, relatórios mensais e semanais, links úteis e guia de uso — direto do navegador, sem instalação, no computador ou no celular.</p>
+    <div class="central-grid">
+      <div class="central-item"><h4>Início</h4><p>Visão geral do projeto e avisos importantes da semana.</p></div>
+      <div class="central-item"><h4>Planejamento</h4><p>Estratégia vigente, calendário editorial e frentes ativas.</p></div>
+      <div class="central-item"><h4>Relatórios</h4><p>Mensais e semanais, sempre atualizados e centralizados.</p></div>
+      <div class="central-item"><h4>Links Úteis</h4><p>Acessos rápidos a materiais, pastas e ferramentas do projeto.</p></div>
+      <div class="central-item"><h4>Guia da Central</h4><p>Como usar cada seção do portal, passo a passo.</p></div>
+      <div class="central-item"><h4>Dashboard de Performance <span class="soon">EM BREVE</span></h4><p>Métricas ao vivo de mídia e social, direto na Central.</p></div>
+    </div>
+    <div style="margin-top:20px;background:rgba(255,255,255,.8);border:1px solid var(--border-soft);border-radius:10px;padding:16px 18px">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--yellow);text-transform:uppercase;margin-bottom:8px">Como acessar</div>
+      <p style="font-size:13.5px;color:var(--txt)">1. Abra <b>central-bmx.vercel.app</b> em qualquer navegador &nbsp;·&nbsp; 2. Informe seu <b>primeiro nome</b> e a <b>senha da equipe</b> (enviada pela Braper no grupo do projeto) &nbsp;·&nbsp; 3. Pronto — sem cadastro e sem instalação. O acesso é individual por sessão: ao fechar a aba, basta entrar novamente.</p>
+    </div>
+  </div>
+</section>
+<div class="divider"><hr></div>
+
+<!-- ============ FATTO BRUTO ============ -->
+<section class="section" id="fatto">
+  <div class="sec-head">
+    <div>
+      <div class="sec-eyebrow"><span class="sec-num">09</span>Eficiência</div>
+      <div class="sec-title">Investimento em MKT sobre Fatto Bruto</div>
+      <p class="sec-desc">Percentual do faturamento rastreado investido em marketing · meta 2026: 0,6% · fonte: DRE MKT</p>
+    </div>
+    <span class="badge-ok">Q1 CONFORME APRESENTADO · Q2 VIA DRE</span>
+  </div>
+  <div class="kpi-grid reveal">
+    <div class="kpi"><div class="k-label">Meta 2026</div><div class="k-value">0,6%</div><div class="k-note">objetivo de investimento</div></div>
+    <div class="kpi"><div class="k-label">% MKT — S1</div><div class="k-value">1,18%</div><div class="k-note down">acima da meta</div></div>
+    <div class="kpi hl"><div class="k-label">Melhor Mês (Mar)</div><div class="k-value">0,37%</div><div class="k-note up">abaixo da meta</div></div>
+    <div class="kpi"><div class="k-label">Fatto Rastreado S1</div><div class="k-value">R$ 5,46 mi</div><div class="k-note down">−9,4% vs S1 2025</div></div>
+    <div class="kpi"><div class="k-label">Despesas MKT S1</div><div class="k-value">R$ 64,6 mil</div><div class="k-note">mídia + ferramentas + produção</div></div>
+  </div>
+  <div class="card reveal" style="margin-top:16px">
+    <h3>Fatto Rastreado e % MKT — 2026 vs 2025</h3><div class="c-sub">DRE · Janeiro a Junho</div>
+    <div class="chart-wrap tall"><canvas id="chFatto"></canvas></div>
+  </div>
+  <div class="grid-2">
+    <div class="card reveal">
+      <h3>Momentum do Funil — Q1 vs Q2</h3><div class="c-sub">Enquanto o fatto rastreado oscila, a geração de demanda acelera</div>
+      <div class="chart-wrap tall"><canvas id="chMomentum"></canvas></div>
+    </div>
+    <div class="card reveal">
+      <h3>Por que o fatto rastreado caiu?</h3><div class="c-sub">Contexto da variação no Q2</div>
+      <p style="font-size:14px;color:var(--txt);margin-top:10px;line-height:1.65">A queda não vem de perda de clientes novos, e sim de <b>redução de consumo de contas históricas</b> conquistadas pelo digital em ciclos anteriores — clientes que seguem ativos, mas compraram menos frete neste trimestre. É a natureza do B2B logístico: o volume faturado oscila com a demanda do cliente, não com a esteira de marketing.</p>
+      <p style="font-size:14px;color:var(--txt);margin-top:10px;line-height:1.65">Enquanto isso, o investimento de marketing se mantém <b>perene e estável</b> (R$ 12–13 mil/mês) — e é ele que sustenta a esteira de demanda que repõe e diversifica essa receita: leads de mídia <b>+76%</b> e receptivos <b>+42%</b> no Q2, com 6 negociações abertas e a JOTUN já aprovada em julho.</p>
+    </div>
+  </div>
+
+  <div class="insight reveal">
+    <div class="i-title">Leitura de eficiência</div>
+    <p>O % de marketing sobre o fatto rastreado fechou o semestre em <b>1,18%</b>, acima da meta de 0,6% — efeito da combinação entre investimento constante e fatto rastreado menor no Q2. A leitura correta é de <b>fase de construção</b>: canais novos plantados, recorde de leads e pipeline maturando — com a receita dessas frentes entrando no S2, a razão volta a convergir para a meta.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="f1">BMX <span style="color:var(--yellow)">Serviços</span> — Relatório de Marketing · 1º Semestre 2026</div>
+  <div class="f2">V4 para validação interna · Braper Performance · Fontes: TCI 2026 · DRE MKT · Meta Business · LinkedIn Analytics · Ramper · Atualizado em 20/07/2026</div>
+</footer>
+<script>
+/* ================= DATA ================= */
+const M = ['Jan','Fev','Mar','Abr','Mai','Jun'];
+const G = {
+  inv:[1914.19,2005.93,2550.10,2089.54,2031.21,2028.20],
+  impr:[4531,2511,6465,8411,6201,5012],
+  cli:[391,210,572,612,466,458],
+  leads:[23,11,37,48,38,35],
+  cpl:[83.23,182.36,68.92,43.53,53.45,57.95],
+  mql:[18,9,30,37,34,30],
+  txmql:[78.3,81.8,81.1,77.1,89.5,85.7],
+  cpmql:[106.34,222.88,85.00,56.47,59.74,67.61]
+};
+const SHARE = {
+  quimico:[11,4,24,32,20,26],
+  armaz:[5,0,8,14,11,5],
+  auto:[4,1,1,0,null,null],
+  cont:[3,6,4,2,5,4],
+  logp:[null,null,null,null,2,0]
+};
+const IG = {
+  alcance:[2682,331,3227,2898,3706,8134],
+  inter:[211,24,465,322,457,1336],
+  views:[4688,519,6425,6839,10633,21876],
+  seg:[37,19,29,36,41,58],
+  visitas:[280,200,260,210,303,620],
+  tx:[7.87,7.25,14.41,11.11,12.33,16.42]
+};
+const LI = { impr:[5414,2413,6459,5501,5785,7064], seg:[91,36,146,162,165,127] };
+const FATTO = {
+  f26:[737338,824951,1901856,777235.05,696663.76,518104.98],
+  f25:[782596,923306,1496983,761408.17,1070154.76,989509.34],
+  p26:[0.89,1.44,0.37,1.64,1.87,2.60]
+};
+
+/* ================= CHART DEFAULTS ================= */
+const YEL='#F1C232', GRY='#9a988f', WHT='#1c1c1c', BLU='#4a76a8', DIM='#8b8b8b', SOFT='rgba(0,0,0,.13)';
+Chart.register(ChartDataLabels);
+Chart.defaults.color = '#5c5c5c';
+Chart.defaults.borderColor = 'rgba(0,0,0,.07)';
+Chart.defaults.font.family = "'IBM Plex Mono', monospace";
+Chart.defaults.font.size = 10.5;
+const fmtK = v => v==null?'':(Math.abs(v)>=1e6 ? (v/1e6).toLocaleString('pt-BR',{maximumFractionDigits:1})+'mi'
+  : Math.abs(v)>=10000 ? Math.round(v/1000)+'k'
+  : Math.abs(v)>=1000 ? (v/1000).toLocaleString('pt-BR',{maximumFractionDigits:1})+'k'
+  : v.toLocaleString('pt-BR',{maximumFractionDigits:0}));
+const fmtR = v => v==null?'':'R$'+fmtK(v);
+const fmtP = v => v==null?'':v.toLocaleString('pt-BR',{maximumFractionDigits:1})+'%';
+Chart.defaults.set('plugins.datalabels',{color:'#161616',font:{family:"'IBM Plex Mono', monospace",size:9.5,weight:'500'},
+  anchor:'end',align:'top',offset:1,clamp:true,formatter:fmtK,display:c=>c.dataset.data[c.dataIndex]!=null});
+const TT = {backgroundColor:'#1c1c1c',borderColor:'#3d3d3d',borderWidth:1,titleFont:{family:"'Archivo',sans-serif",weight:'600'},padding:10,cornerRadius:8};
+const brl = v => 'R$ ' + v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const num = v => v.toLocaleString('pt-BR');
+const LEG = {position:'bottom',labels:{boxWidth:10,boxHeight:10,padding:14,usePointStyle:true,pointStyle:'rectRounded'}};
+
+function mk(id,cfg){const el=document.getElementById(id);if(el)new Chart(el,cfg);}
+
+/* Invest vs Leads */
+mk('chInvLeads',{type:'bar',data:{labels:M,datasets:[
+  {label:'Investimento (R$)',data:G.inv,backgroundColor:'rgba(241,194,50,.9)',borderRadius:5,yAxisID:'y',datalabels:{formatter:fmtR,rotation:0}},
+  {label:'Leads',data:G.leads,type:'line',borderColor:WHT,backgroundColor:WHT,tension:.35,pointRadius:4,yAxisID:'y1'}
+]},options:{maintainAspectRatio:false,plugins:{legend:LEG,tooltip:{...TT,callbacks:{label:c=>c.dataset.label.includes('Invest')?' '+brl(c.raw):' '+c.dataset.label+': '+c.raw}}},
+scales:{y:{ticks:{callback:v=>'R$'+(v/1000).toFixed(1)+'k'}},y1:{position:'right',grid:{display:false}}}}});
+
+/* CPL */
+mk('chCPL',{type:'line',data:{labels:M,datasets:[{label:'CPL (R$)',data:G.cpl,borderColor:'#d9a61f',backgroundColor:'rgba(241,194,50,.18)',fill:true,tension:.35,pointRadius:4,pointBackgroundColor:'#d9a61f',datalabels:{formatter:v=>'R$'+Math.round(v)}}]},
+options:{maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>' '+brl(c.raw)}}},scales:{y:{ticks:{callback:v=>'R$'+v}}}}});
+
+/* Impr & Cliques */
+mk('chImprCli',{type:'bar',data:{labels:M,datasets:[
+  {label:'Impressões',data:G.impr,backgroundColor:SOFT,borderRadius:5,yAxisID:'y'},
+  {label:'Cliques',data:G.cli,type:'line',borderColor:YEL,backgroundColor:YEL,tension:.35,pointRadius:4,yAxisID:'y1'}
+]},options:{maintainAspectRatio:false,plugins:{legend:LEG,tooltip:TT},scales:{y:{ticks:{callback:v=>num(v)}},y1:{position:'right',grid:{display:false}}}}});
+
+/* MQL */
+mk('chMQL',{type:'bar',data:{labels:M,datasets:[
+  {label:'MQL',data:G.mql,backgroundColor:'rgba(241,194,50,.85)',borderRadius:5,yAxisID:'y'},
+  {label:'Tx. Lead→MQL (%)',data:G.txmql,type:'line',borderColor:WHT,backgroundColor:WHT,tension:.35,pointRadius:4,yAxisID:'y1',datalabels:{formatter:fmtP,align:'bottom'}}
+]},options:{maintainAspectRatio:false,plugins:{legend:LEG,tooltip:{...TT,callbacks:{label:c=>' '+c.dataset.label+': '+c.raw+(c.dataset.label.includes('%')?'%':'')}}},
+scales:{y:{},y1:{position:'right',grid:{display:false},min:0,max:100,ticks:{callback:v=>v+'%'}}}}});
+
+/* Share por campanha */
+mk('chShare',{type:'bar',data:{labels:M,datasets:[
+  {label:'Transp. Químico',data:SHARE.quimico,backgroundColor:YEL,borderRadius:3},
+  {label:'Armazenagem',data:SHARE.armaz,backgroundColor:'#c9c7bf',borderRadius:3},
+  {label:'Container',data:SHARE.cont,backgroundColor:BLU,borderRadius:3},
+  {label:'Automotivo',data:SHARE.auto,backgroundColor:'#8f7a30',borderRadius:3},
+  {label:'Log. Promocional',data:SHARE.logp,backgroundColor:'#c79e26',borderRadius:3}
+]},options:{maintainAspectRatio:false,plugins:{legend:LEG,tooltip:{...TT,callbacks:{footer:its=>'Total: '+its.reduce((s,i)=>s+(i.raw||0),0)+' leads'}}},
+scales:{x:{stacked:true},y:{stacked:true,title:{display:true,text:'leads'}}},plugins:{legend:LEG,tooltip:{...TT,callbacks:{footer:its=>'Total: '+its.reduce((s,i)=>s+(i.raw||0),0)+' leads'}},datalabels:{anchor:'center',align:'center',color:'#161616',display:c=>(c.dataset.data[c.dataIndex]||0)>1}}}});
+
+/* Custos por etapa */
+mk('chCustos',{type:'line',data:{labels:M,datasets:[
+  {label:'CPL',data:G.cpl,borderColor:'#d9a61f',backgroundColor:'#d9a61f',tension:.35,pointRadius:4,datalabels:{formatter:v=>'R$'+Math.round(v),align:'bottom'}},
+  {label:'CPMQL',data:G.cpmql,borderColor:WHT,backgroundColor:WHT,tension:.35,pointRadius:4,datalabels:{formatter:v=>'R$'+Math.round(v)}},
+  {label:'CPSQL (até Fev)',data:[212.69,286.56,null,null,null,null],borderColor:DIM,backgroundColor:DIM,borderDash:[6,5],tension:.35,pointRadius:4,datalabels:{formatter:v=>'R$'+Math.round(v)}}
+]},options:{maintainAspectRatio:false,plugins:{legend:LEG,tooltip:{...TT,callbacks:{label:c=>' '+c.dataset.label+': '+brl(c.raw)}}},scales:{y:{ticks:{callback:v=>'R$'+v}}}}});
+
+/* Origem dos receptivos */
+mk('chOrigem',{type:'doughnut',data:{labels:['Site (93)','Google (54)','E-mail (24)','Indicações (7)','Outros/Sem dados (18)'],datasets:[{
+  data:[93,54,24,7,18],
+  backgroundColor:[YEL,'#d9a61f',BLU,'#c9c7bf','#8b8b8b'],
+  borderColor:'#ffffff',borderWidth:3,
+  datalabels:{color:'#161616',anchor:'center',align:'center'}
+}]},options:{maintainAspectRatio:false,cutout:'62%',plugins:{legend:{position:'right',labels:{boxWidth:10,boxHeight:10,padding:12,usePointStyle:true,pointStyle:'rectRounded'}},tooltip:{...TT,callbacks:{label:c=>' '+c.label.split(' (')[0]+': '+c.raw+' receptivos ('+Math.round(c.raw/196*100)+'%)'}}}}});
+
+/* Receita por indicação */
+mk('chIndicacao',{type:'bar',data:{labels:['FMC (Comercial)','Ramper (CRM)','Armazém Recep.','MKT (Mídia)'],datasets:[{
+  label:'Receita S1',data:[4036946.30,1157994.87,441230.66,30507.18],datalabels:{formatter:fmtR,anchor:'end',align:'right',clamp:true},
+  backgroundColor:['rgba(232,232,232,.35)',YEL,'rgba(111,168,220,.8)','#c79e26'],borderRadius:6
+}]},options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>' '+brl(c.raw)+' ('+(c.raw/5666679.01*100).toFixed(1)+'%)'}}},
+scales:{x:{ticks:{callback:v=>'R$'+(v/1e6).toFixed(1)+'mi'}}}}});
+
+/* IG alcance vs interações */
+mk('chIgAlcance',{type:'bar',data:{labels:M,datasets:[
+  {label:'Alcance',data:IG.alcance,backgroundColor:'rgba(241,194,50,.85)',borderRadius:5,yAxisID:'y'},
+  {label:'Interações',data:IG.inter,type:'line',borderColor:WHT,backgroundColor:WHT,tension:.35,pointRadius:4,yAxisID:'y1'}
+]},options:{maintainAspectRatio:false,plugins:{legend:LEG,tooltip:TT},scales:{y:{ticks:{callback:v=>num(v)}},y1:{position:'right',grid:{display:false}}}}});
+
+/* IG views */
+mk('chIgViews',{type:'bar',data:{labels:M,datasets:[{label:'Visualizações',data:IG.views,backgroundColor:ctx=>ctx.dataIndex===5?YEL:'rgba(241,194,50,.4)',borderRadius:5}]},
+options:{maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>' '+num(c.raw)+' visualizações'}}},scales:{y:{ticks:{callback:v=>num(v)}}}}});
+
+/* IG seguidores + visitas */
+mk('chIgSeg',{type:'bar',data:{labels:M,datasets:[
+  {label:'Novos seguidores',data:IG.seg,backgroundColor:'rgba(241,194,50,.85)',borderRadius:5,yAxisID:'y'},
+  {label:'Visitas ao perfil',data:IG.visitas,type:'line',borderColor:BLU,backgroundColor:BLU,tension:.35,pointRadius:4,yAxisID:'y1'}
+]},options:{maintainAspectRatio:false,plugins:{legend:LEG,tooltip:TT},scales:{y:{},y1:{position:'right',grid:{display:false}}}}});
+
+/* IG taxa engajamento */
+mk('chIgTx',{type:'line',data:{labels:M,datasets:[{label:'Tx. engajamento (%)',data:IG.tx,borderColor:'#d9a61f',backgroundColor:'rgba(241,194,50,.18)',fill:true,tension:.35,pointRadius:4,pointBackgroundColor:'#d9a61f',datalabels:{formatter:fmtP}}]},
+options:{maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>' '+c.raw+'%'}}},scales:{y:{ticks:{callback:v=>v+'%'}}}}});
+
+/* LinkedIn impressões */
+mk('chLiImpr',{type:'bar',data:{labels:M,datasets:[{label:'Impressões orgânicas',data:LI.impr,backgroundColor:'rgba(241,194,50,.85)',borderRadius:5}]},
+options:{maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>' '+num(c.raw)+' impressões'}}},scales:{y:{ticks:{callback:v=>num(v)}}}}});
+
+/* LinkedIn seguidores */
+mk('chLiSeg',{type:'bar',data:{labels:M,datasets:[{label:'Novos seguidores',data:LI.seg,backgroundColor:ctx=>[3,4].includes(ctx.dataIndex)?YEL:'rgba(241,194,50,.4)',borderRadius:5}]},
+options:{maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>' +'+c.raw+' seguidores'}}},scales:{y:{}}}});
+
+/* Newsletter ondas */
+mk('chMailOndas',{type:'bar',data:{labels:['1º · Base Total','2º · Reengajamento','3º · Leads Quentes'],datasets:[
+  {label:'Entregues',data:[5829,4527,2864],backgroundColor:SOFT,borderRadius:5},
+  {label:'Aberturas',data:[2483,1964,2812],backgroundColor:YEL,borderRadius:5}
+]},options:{maintainAspectRatio:false,plugins:{legend:LEG,tooltip:{...TT,callbacks:{footer:its=>{const e=its.find(i=>i.dataset.label==='Entregues'),a=its.find(i=>i.dataset.label==='Aberturas');return e&&a?'Abertura: '+(a.raw/e.raw*100).toFixed(1)+'%':''}}}},
+scales:{y:{ticks:{callback:v=>num(v)}}}}});
+
+/* Momentum Q1 vs Q2 */
+mk('chMomentum',{type:'bar',data:{labels:['Leads de Mídia','Receptivos','SQL','Em Negociação'],datasets:[
+  {label:'Q1',data:[71,81,24,0],backgroundColor:SOFT,borderRadius:5},
+  {label:'Q2',data:[125,115,26,6],backgroundColor:'rgba(241,194,50,.9)',borderRadius:5}
+]},options:{maintainAspectRatio:false,plugins:{legend:LEG,tooltip:TT,datalabels:{anchor:'end',align:'top'}},scales:{y:{beginAtZero:true}}}});
+
+/* Fatto */
+mk('chFatto',{type:'bar',data:{labels:['JAN','FEV','MAR','ABR','MAI','JUN'],datasets:[
+  {label:'Fatto 2026 (R$)',data:FATTO.f26,backgroundColor:'rgba(241,194,50,.9)',borderRadius:4,yAxisID:'y',datalabels:{formatter:fmtR,rotation:270,anchor:'end',align:'start',color:'#161616'}},
+  {label:'Fatto 2025 (R$)',data:FATTO.f25,backgroundColor:SOFT,borderRadius:4,yAxisID:'y',datalabels:{display:false}},
+  {label:'% MKT 2026',data:FATTO.p26,type:'line',borderColor:'#b8860b',backgroundColor:'#b8860b',tension:.3,pointRadius:4,yAxisID:'y1',datalabels:{formatter:fmtP,align:'top'}},
+  {label:'Meta 0,6%',data:[0.6,0.6,0.6,0.6,0.6,0.6],type:'line',borderColor:'#1a7f37',borderDash:[3,4],pointRadius:0,yAxisID:'y1',datalabels:{display:false}}
+]},options:{maintainAspectRatio:false,plugins:{legend:LEG,tooltip:{...TT,callbacks:{label:c=>c.dataset.label.includes('R$')?' '+c.dataset.label+': '+brl(c.raw):' '+c.dataset.label+': '+c.raw+'%'}}},
+scales:{y:{ticks:{callback:v=>'R$'+(v/1e6).toFixed(1)+'mi'}},y1:{position:'right',grid:{display:false},ticks:{callback:v=>v+'%'}}}}});
+
+/* ================= INTERACTIONS ================= */
+document.querySelectorAll('#tabsCamp .tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('#tabsCamp .tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('show'));
+  t.classList.add('active');
+  document.getElementById(t.dataset.pane).classList.add('show');
+}));
+
+const io = new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return;
+  e.target.classList.add('in');
+  e.target.querySelectorAll('[data-count]').forEach(el=>{
+    if(el.dataset.done)return; el.dataset.done=1;
+    const end=parseFloat(el.dataset.count), fmt=el.dataset.fmt, t0=performance.now(), dur=1100;
+    const step=t=>{const p=Math.min((t-t0)/dur,1), v=end*(1-Math.pow(1-p,3));
+      el.textContent = fmt==='brl' ? brl(v) : num(Math.round(v));
+      if(p<1)requestAnimationFrame(step);};
+    requestAnimationFrame(step);
+  });
+  e.target.querySelectorAll('.hb-fill').forEach(f=>f.style.width=f.dataset.w+'%');
+  io.unobserve(e.target);
+}),{threshold:.18});
+document.querySelectorAll('.reveal,[data-hbars]').forEach(el=>io.observe(el));
+
+const secs=[...document.querySelectorAll('section[id]')];
+const links=[...document.querySelectorAll('.nav-links a')];
+const map={midia:'#midia',funil:'#midia',campanhas:'#midia',roas:'#roas',social:'#social',linkedin:'#social',email:'#email',projetos:'#projetos',central:'#central',fatto:'#fatto'};
+window.addEventListener('scroll',()=>{
+  let cur=null;
+  secs.forEach(s=>{if(s.getBoundingClientRect().top<120)cur=s.id;});
+  links.forEach(l=>l.classList.toggle('active', cur && l.getAttribute('href')===map[cur]));
+},{passive:true});
+</script>
+</body>
+</html>
